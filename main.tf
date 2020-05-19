@@ -101,7 +101,8 @@ resource "aws_instance" "lw-lab-nodes" {
   
 
   tags = {
-    Name = "lw-lab-0${count.index + 1}"
+    Name  = "lw-lab-0${count.index + 1}"
+    Env   = "lab"
   }
 
   key_name = "lw"
