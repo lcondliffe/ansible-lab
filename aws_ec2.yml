@@ -6,7 +6,7 @@ regions:
 filters:
  tag:Env: lab
 hostnames:
-  - tag:Name
   - dns-name
+  - tag:Name
   - private-ip-address
 strict_permissions: false
