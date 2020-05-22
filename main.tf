@@ -59,13 +59,19 @@ resource "aws_security_group" "lw-lab-sg" {
   }
 
   ingress {
-    protocol    = "icmp"
-    from_port   = 22
-    to_port     = 22
+    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 65535
+    self        = true
+  }
+  
+  ingress {
+    from_port = 8
+    to_port = 0
+    protocol = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-
+  
   egress {
     protocol    = -1
     from_port   = 0 
