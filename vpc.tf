@@ -1,4 +1,4 @@
-# VPC
+# VPC and Internal lab subnet
 resource "aws_vpc" "lw-lab-vpc" {
   cidr_block = "10.100.0.0/16"
   enable_dns_hostnames = true
