@@ -20,6 +20,7 @@ resource "aws_instance" "lw-lab-nodes" {
   count         = 3
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
+  associate_public_ip_address = true
   subnet_id     = aws_subnet.lw-lab-subnet.id
   vpc_security_group_ids      = [aws_security_group.lw-lab-sg.id]
   
