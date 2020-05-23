@@ -184,7 +184,7 @@ resource "aws_instance" "lw-lab-bastion" {
   provisioner "remote-exec" {
     inline = [
       "sudo mv /home/ubuntu/ansible.cfg /etc/ansible/ansible.cfg",
-      "chmod /home/ubuntu/.ssh/lw.pem",
+      "chmod 700 /home/ubuntu/.ssh/lw.pem",
     ]
 
       connection {
