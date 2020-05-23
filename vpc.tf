@@ -16,7 +16,7 @@ resource "aws_subnet" "lw-lab-subnet" {
 
 
 # Internet Gateway and Route Table
-resource "aws_internet_gateway" "lw-lab-gw" {
+resource "aws_internet_gateway" "lw-lab-ig" {
   vpc_id = aws_vpc.lw-lab-vpc.id
 
   tags = {
@@ -35,6 +35,15 @@ resource "aws_main_route_table_association" "a" {
   vpc_id         = aws_vpc.lw-lab-vpc.id
   route_table_id = aws_route_table.lw-lab-rt.id
 }
+
+#TODO Elastic IP and NAT Gateway
+
+
+resource "aws_nat_gateway" "lw-lab-ng" {
+  allocation_id = "${aws_eip.nat.id}"
+  subnet_id     = "${aws_subnet.lw-lab-subnet.id}"
+}
+
 
 #VPC Security Group
 resource "aws_security_group" "lw-lab-sg" {
