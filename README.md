@@ -24,3 +24,7 @@ The lab is accessible via a bastion host provisioned by this Terraform configura
 `ssh -i ~/.ssh/lw.pem ubuntu@34.254.204.84`
 
 NOTE: You must also configure an AWS authentication method on this host in order for the dynamic inventory and other API calls to AWS functionality to work.
+
+### To-Do
+- Hide the lab instances behind a NAT gateway rather than have public IPs assigned to all nodes.
+- Parametise the configuration with variables.
