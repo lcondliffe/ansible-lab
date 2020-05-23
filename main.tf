@@ -71,7 +71,7 @@ resource "aws_security_group" "lw-lab-sg" {
     protocol = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   egress {
     protocol    = -1
     from_port   = 0 
@@ -184,6 +184,7 @@ resource "aws_instance" "lw-lab-bastion" {
   provisioner "remote-exec" {
     inline = [
       "sudo mv /home/ubuntu/ansible.cfg /etc/ansible/ansible.cfg",
+      "chmod /home/ubuntu/.ssh/lw.pem",
     ]
 
       connection {
