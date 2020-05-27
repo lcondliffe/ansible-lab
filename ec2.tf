@@ -65,6 +65,18 @@ resource "aws_instance" "lw-lab-bastion" {
   }
 
   provisioner "file"{
+    source      = "ansible/"
+    destination = "/home/ubuntu/ansible"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("/home/luke/.ssh/lw.pem")
+      host        = self.public_ip
+    }
+  }
+
+    provisioner "file"{
     source      = "/home/luke/.ssh/lw.pem"
     destination = "/home/ubuntu/.ssh/lw.pem"
 
