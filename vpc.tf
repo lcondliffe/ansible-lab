@@ -37,13 +37,6 @@ resource "aws_main_route_table_association" "a" {
   route_table_id = aws_route_table.lw-lab-rt.id
 }
 
-#Elastic IP and NAT Gateway
-#resource "aws_nat_gateway" "lw-lab-ng" {
-#  allocation_id = "${aws_eip.nat.id}"
-#  subnet_id     = "${aws_subnet.lw-lab-subnet.id}"
-#}
-
-
 #VPC Security Group
 resource "aws_security_group" "lw-lab-sg" {
   name   = "lw-lab-security-group"
