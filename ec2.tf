@@ -66,7 +66,7 @@ resource "aws_instance" "lw-lab-bastion" {
 
   provisioner "file"{
     source      = "ansible/"
-    destination = "/home/ubuntu/ansible"
+    destination = "/home/ubuntu"
 
     connection {
       type        = "ssh"
