@@ -59,7 +59,7 @@ resource "aws_instance" "lw-lab-bastion" {
       connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
@@ -71,19 +71,19 @@ resource "aws_instance" "lw-lab-bastion" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
 
     provisioner "file"{
-    source      = "/home/luke/.ssh/lw.pem"
-    destination = "/home/ubuntu/.ssh/lw.pem"
+    source      = var.ssh_key
+    destination = "/home/ubuntu/.ssh/key.pem"
 
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
@@ -95,7 +95,7 @@ resource "aws_instance" "lw-lab-bastion" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
@@ -107,7 +107,7 @@ resource "aws_instance" "lw-lab-bastion" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
@@ -115,13 +115,13 @@ resource "aws_instance" "lw-lab-bastion" {
   provisioner "remote-exec" {
     inline = [
       "sudo mv /home/ubuntu/ansible.cfg /etc/ansible/ansible.cfg",
-      "chmod 700 /home/ubuntu/.ssh/lw.pem",
+      "chmod 700 /home/ubuntu/.ssh/key.pem",
     ]
 
       connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("/home/luke/.ssh/lw.pem")
+      private_key = file(var.ssh_key)
       host        = self.public_ip
     }
   }
