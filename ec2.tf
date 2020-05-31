@@ -36,7 +36,7 @@ resource "aws_instance" "lw-lab-nodes" {
 # Create Bastion Host
 resource "aws_instance" "lw-lab-bastion" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t3.micro"
+  instance_type               = var.bastion_instance_size
   subnet_id                   = aws_subnet.lw-lab-subnet.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.lw-lab-sg.id]
