@@ -16,17 +16,17 @@ data "aws_ami" "ubuntu" {
 }
 
 # Create 3 Ubuntu 18.04 Instances
-resource "aws_instance" "lw-lab-nodes" {
+resource "aws_instance" "ansib-lab-nodes" {
   count         = 3
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.node_instance_size
   associate_public_ip_address = true
-  subnet_id     = aws_subnet.lw-lab-subnet.id
-  vpc_security_group_ids      = [aws_security_group.lw-lab-sg.id]
+  subnet_id     = aws_subnet.ansib-lab-subnet.id
+  vpc_security_group_ids      = [aws_security_group.ansib-lab-sg.id]
   
 
   tags = {
-    Name  = "lw-lab-0${count.index + 1}"
+    Name  = "ansib-lab-0${count.index + 1}"
     Env   = "lab"
   }
 
@@ -34,15 +34,15 @@ resource "aws_instance" "lw-lab-nodes" {
 }
 
 # Create Bastion Host
-resource "aws_instance" "lw-lab-bastion" {
+resource "aws_instance" "ansib-lab-bastion" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.bastion_instance_size
-  subnet_id                   = aws_subnet.lw-lab-subnet.id
+  subnet_id                   = aws_subnet.ansib-lab-subnet.id
   associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.lw-lab-sg.id]
+  vpc_security_group_ids      = [aws_security_group.ansib-lab-sg.id]
 
   tags = {
-    Name = "lw-lab-bst"
+    Name = "ansib-lab-bst"
   }
 
   provisioner "remote-exec" {
