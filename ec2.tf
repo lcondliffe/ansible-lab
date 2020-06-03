@@ -29,7 +29,7 @@ resource "aws_instance" "ansib-lab-nodes" {
     Env   = "lab"
   }
 
-  key_name = "lw"
+  key_name = var.ssh_key_name
 }
 
 # Create Bastion Host
@@ -125,5 +125,5 @@ resource "aws_instance" "ansib-lab-bastion" {
     }
   }
 
-  key_name = "lw"
+  key_name = var.ssh_key_name
 }

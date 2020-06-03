@@ -26,5 +26,4 @@ The lab is accessible via a bastion host provisioned by this Terraform configura
 NOTE: You must also configure an AWS authentication method on this host in order for the dynamic inventory and other API calls to AWS functionality to work.
 
 ### To-Do
-- Parametise the configuration with variables.
 - Extra comments to describe the infra
