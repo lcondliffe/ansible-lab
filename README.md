@@ -28,3 +28,4 @@ NOTE: You must also configure an AWS authentication method on this host in order
 ### To-Do
 - Hide the lab instances behind a NAT gateway rather than have public IPs assigned to all nodes.
 - Parametise the configuration with variables.
+- Extra comments to describe the infra

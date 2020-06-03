@@ -20,8 +20,7 @@ resource "aws_instance" "ansib-lab-nodes" {
   count         = 3
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.node_instance_size
-  associate_public_ip_address = true
-  subnet_id     = aws_subnet.ansib-lab-subnet.id
+  subnet_id     = aws_subnet.ansib-lab-subnet-private.id
   vpc_security_group_ids      = [aws_security_group.ansib-lab-sg.id]
   
 
@@ -37,7 +36,7 @@ resource "aws_instance" "ansib-lab-nodes" {
 resource "aws_instance" "ansib-lab-bastion" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.bastion_instance_size
-  subnet_id                   = aws_subnet.ansib-lab-subnet.id
+  subnet_id                   = aws_subnet.ansib-lab-subnet-public.id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.ansib-lab-sg.id]
 

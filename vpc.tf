@@ -1,4 +1,4 @@
-# VPC and Internal lab subnet
+# VPC
 resource "aws_vpc" "ansib-lab-vpc" {
   cidr_block = "10.100.0.0/16"
   enable_dns_hostnames = true
@@ -8,23 +8,42 @@ resource "aws_vpc" "ansib-lab-vpc" {
     Name = "ansib-lab-vpc"
   }
 }
-resource "aws_subnet" "ansib-lab-subnet" {
-  vpc_id                    = aws_vpc.ansib-lab-vpc.id
-  cidr_block                = "10.100.1.0/24"
-  availability_zone         = "eu-west-1a"
-  map_public_ip_on_launch   = true
-}
 
-
-# Internet Gateway and Route Table
+# Internet Gateway
 resource "aws_internet_gateway" "ansib-lab-gw" {
   vpc_id = aws_vpc.ansib-lab-vpc.id
 
   tags = {
-    Name = "main"
+    Name = "ansible-lab"
   }
 }
-resource "aws_route_table" "ansib-lab-rt" {
+
+# NAT Gateway / Elastic IP
+resource "aws_eip" "nat-gateway-eip" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "ansib-lab-nat-gw" {
+  allocation_id = aws_eip.nat-gateway-eip.id
+  subnet_id = aws_subnet.ansib-lab-subnet-public.id
+}
+
+# Lab Subnets
+resource "aws_subnet" "ansib-lab-subnet-public" {
+  vpc_id                    = aws_vpc.ansib-lab-vpc.id
+  cidr_block                = "10.100.1.0/24"
+  availability_zone         = "eu-west-1a"
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "ansib-lab-subnet-private" {
+  vpc_id                    = aws_vpc.ansib-lab-vpc.id
+  cidr_block                = "10.100.2.0/24"
+  availability_zone         = "eu-west-1a"
+}
+
+# Route Tables
+resource "aws_route_table" "public-route" {
   vpc_id = aws_vpc.ansib-lab-vpc.id
 
   route {
@@ -32,9 +51,28 @@ resource "aws_route_table" "ansib-lab-rt" {
     gateway_id = aws_internet_gateway.ansib-lab-gw.id
   }
 }
-resource "aws_main_route_table_association" "a" {
-  vpc_id         = aws_vpc.ansib-lab-vpc.id
-  route_table_id = aws_route_table.ansib-lab-rt.id
+
+resource "aws_route_table" "private-route" {
+  vpc_id = aws_vpc.ansib-lab-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.ansib-lab-nat-gw.id
+  }
+}
+
+# Associate Public Subnet with Public Route Table
+resource "aws_route_table_association" "public-subnet-assoc" {
+  route_table_id = aws_route_table.public-route.id
+  subnet_id      = aws_subnet.ansib-lab-subnet-public.id
+  depends_on     = [aws_route_table.public-route, aws_subnet.ansib-lab-subnet-public]
+}
+
+# Associate Private Subnet with Private Route Table
+resource "aws_route_table_association" "private-subnet-assoc" {
+  route_table_id = aws_route_table.private-route.id
+  subnet_id      = aws_subnet.ansib-lab-subnet-private.id
+  depends_on     = [aws_route_table.private-route, aws_subnet.ansib-lab-subnet-private]
 }
 
 #VPC Security Group
