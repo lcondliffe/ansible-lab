@@ -5,7 +5,7 @@ resource "aws_vpc" "ansib-lab-vpc" {
   enable_dns_support    = true
   
   tags = {
-    Name = "ansib-lab-vpc"
+    Name = "ansible-lab"
   }
 }
 
@@ -21,11 +21,19 @@ resource "aws_internet_gateway" "ansib-lab-gw" {
 # NAT Gateway / Elastic IP
 resource "aws_eip" "nat-gateway-eip" {
   vpc = true
+  
+  tags = {
+    Name = "ansible-lab"
+  }
 }
 
 resource "aws_nat_gateway" "ansib-lab-nat-gw" {
   allocation_id = aws_eip.nat-gateway-eip.id
   subnet_id     = aws_subnet.ansib-lab-subnet-public.id
+
+  tags = {
+    Name = "ansible-lab"
+  }
 }
 
 # Lab Subnets
@@ -34,12 +42,20 @@ resource "aws_subnet" "ansib-lab-subnet-public" {
   cidr_block                = "10.100.1.0/24"
   availability_zone         = "eu-west-1a"
   map_public_ip_on_launch = true
+
+  tags = {
+    Name = "ansible-lab"
+  }
 }
 
 resource "aws_subnet" "ansib-lab-subnet-private" {
   vpc_id                    = aws_vpc.ansib-lab-vpc.id
   cidr_block                = "10.100.2.0/24"
   availability_zone         = "eu-west-1a"
+
+  tags = {
+    Name = "ansible-lab"
+  }
 }
 
 # Route Tables
@@ -106,5 +122,9 @@ resource "aws_security_group" "ansib-lab-sg" {
     from_port   = 0 
     to_port     = 0 
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ansible-lab"
   }
 }
