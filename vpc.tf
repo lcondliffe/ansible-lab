@@ -1,8 +1,8 @@
 # VPC
 resource "aws_vpc" "ansib-lab-vpc" {
-  cidr_block = "10.100.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support = true
+  cidr_block            = "10.100.0.0/16"
+  enable_dns_hostnames  = true
+  enable_dns_support    = true
   
   tags = {
     Name = "ansib-lab-vpc"
@@ -25,7 +25,7 @@ resource "aws_eip" "nat-gateway-eip" {
 
 resource "aws_nat_gateway" "ansib-lab-nat-gw" {
   allocation_id = aws_eip.nat-gateway-eip.id
-  subnet_id = aws_subnet.ansib-lab-subnet-public.id
+  subnet_id     = aws_subnet.ansib-lab-subnet-public.id
 }
 
 # Lab Subnets
@@ -95,9 +95,9 @@ resource "aws_security_group" "ansib-lab-sg" {
   }
   
   ingress {
-    from_port = 8
-    to_port = 0
-    protocol = "icmp"
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
