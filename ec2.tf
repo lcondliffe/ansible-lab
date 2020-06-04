@@ -47,10 +47,9 @@ resource "aws_instance" "ansib-lab-bastion" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt update",
-      "sudo apt install software-properties-common",
+      "sudo apt install software-properties-common -y",
       "sudo apt-add-repository --yes --update ppa:ansible/ansible",
       "sudo apt install ansible -y",
-      #"sudo apt-get install python3-pip -y",
       "sudo apt install python-pip -y",
       "pip install boto3",
     ]
