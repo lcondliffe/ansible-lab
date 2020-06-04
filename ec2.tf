@@ -17,11 +17,11 @@ data "aws_ami" "ubuntu" {
 
 # Create 3 Ubuntu 18.04 Instances
 resource "aws_instance" "ansib-lab-nodes" {
-  count         = 3
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.node_instance_size
-  subnet_id     = aws_subnet.ansib-lab-subnet-private.id
-  vpc_security_group_ids      = [aws_security_group.ansib-lab-sg.id]
+  count                   = 3
+  ami                     = data.aws_ami.ubuntu.id
+  instance_type           = var.node_instance_size
+  subnet_id               = aws_subnet.ansib-lab-subnet-private.id
+  vpc_security_group_ids  = [aws_security_group.ansib-lab-sg.id]
   
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_instance" "ansib-lab-nodes" {
   key_name = var.ssh_key_name
 }
 
-# Create Bastion Host
+# Create Bastion Host (Ubuntu 18.04)
 resource "aws_instance" "ansib-lab-bastion" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.bastion_instance_size
