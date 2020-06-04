@@ -27,3 +27,4 @@ NOTE: You must also configure an AWS authentication method on this host in order
 
 ### To-Do
 - Extra comments to describe the infra
+- AWS Tags
