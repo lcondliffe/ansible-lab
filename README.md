@@ -44,6 +44,3 @@ The key pair you defined will be available on the Bastion host as ~/.ssh/key.pem
 ./aws_ec2.yml included with this project is a dynamic Ansible inventory, you can use this to target the lab nodes with Ansible. To show the contents of this you can use:
 
 `ansible-inventory -i aws_ec2.yml --graph`
-
-### To-Do
-- AWS Tags
